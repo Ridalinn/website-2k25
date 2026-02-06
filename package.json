@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "basehub dev & next dev --webpack",
-    "build": "basehub && next build --webpack",
+    "dev": "next dev --webpack",
+    "dev:full": "basehub dev & next dev --webpack",
+    "build": "next build --webpack",
+    "build:full": "basehub && next build --webpack",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
     "prettier": "prettier --write .",
     "start": "next start",
