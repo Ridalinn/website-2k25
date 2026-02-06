@@ -1,36 +1,38 @@
-import { BrandsDesktop } from "@/components/brands"
+const PARTNERS = [
+  "State Farm",
+  "Allstate",
+  "GEICO",
+  "Progressive",
+  "USAA",
+  "CCC Intelligent Solutions",
+  "Mitchell International",
+  "Audatex",
+  "Caliber Collision",
+  "Service King",
+  "Gerber Collision",
+  "ABRA Auto Body"
+]
 
-import { Scalars } from "../../../../.basehub/schema"
-import { BrandsMobile } from "./brands-mobile"
-import type { QueryType } from "./query"
-
-export type Brand = {
-  _id: Scalars["String"]
-  _title: Scalars["String"]
-  logo: Scalars["String"] | null
-  website: Scalars["String"] | null
-}
-
-export const Brands = ({ data }: { data: QueryType }) => {
-  const brands =
-    data.company.clients?.clientList.items.filter((c: any) => c.logo) ?? []
-
-  // Ensure we have a number of brands that's a multiple of 3 for the mobile grid
-  const mobileBrands = [...brands]
-  while (mobileBrands.length % 3 !== 0) {
-    const randomIndex = Math.floor(Math.random() * mobileBrands.length)
-    mobileBrands.splice(randomIndex, 1)
-  }
-
+export const Brands = () => {
   return (
-    <>
-      <BrandsDesktop brands={brands} />
-      <BrandsMobile
-        brandsMobile={[
-          mobileBrands.slice(0, mobileBrands.length / 2),
-          mobileBrands.slice(mobileBrands.length / 2)
-        ]}
-      />
-    </>
+    <section className="grid-layout">
+      <div className="col-span-full">
+        <p className="mb-6 text-f-h4-mobile text-brand-g1 lg:text-f-h4">
+          Trusted by repair facilities and insurance carriers across Texas
+        </p>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+          {PARTNERS.map((partner) => (
+            <div
+              key={partner}
+              className="flex h-16 items-center justify-center border border-brand-w1/10 px-4"
+            >
+              <span className="text-center text-f-p-mobile font-semibold text-brand-w2 lg:text-f-p">
+                {partner}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }

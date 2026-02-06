@@ -26,7 +26,7 @@ export const ArcadeFeatured = () => {
   const isLooperSelected = isInLabTab && labTabIndex === experiments.length - 1
 
   const handleChroniclesClick = useCallback(() => {
-    window.open("https://chronicles.basement.studio", "_blank")
+    window.open("https://fulcrumtechnologies.ai/products", "_blank")
   }, [])
 
   useKeyPress(
@@ -103,7 +103,7 @@ export const ArcadeFeatured = () => {
               zIndexOffset={10}
               positionTop={4}
             >
-              PLAY BASEMENT CHRONICLES
+              EXPLORE FULCRUM PRODUCTS
             </Text>
           </Container>
           <Image

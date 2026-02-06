@@ -34,7 +34,7 @@ export const ArcadeLabsList = ({
   const isInGame = useArcadeStore((state) => state.isInGame)
 
   const handleExperimentClick = useCallback((data: any) => {
-    window.open(`https://lab.basement.studio/experiments/${data.url}`, "_blank")
+    window.open(`https://fulcrumtechnologies.ai/lab/experiments/${data.url}`, "_blank")
   }, [])
 
   useKeyPress(
@@ -195,7 +195,7 @@ export const ArcadeLabsList = ({
                 positionType="relative"
                 onClick={(e) => {
                   window.open(
-                    `https://github.com/basementstudio/basement-laboratory/tree/main/src/experiments/${data.url}`,
+                    `https://github.com/fulcrumtechnologies/lab/tree/main/src/experiments/${data.url}`,
                     "_blank"
                   )
                 }}
@@ -269,7 +269,7 @@ const ViewMore = ({
   const experiments = useArcadeStore((state) => state.labTabs)
   const setCursor = useCursor()
   const handleViewMoreClick = useCallback(() => {
-    window.open("https://lab.basement.studio/", "_blank")
+    window.open("https://fulcrumtechnologies.ai/lab/", "_blank")
   }, [])
 
   const isSelected = isInLabTab && labTabIndex === experiments.length - 3

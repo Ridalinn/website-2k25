@@ -1,7 +1,4 @@
-import { Pump } from "basehub/react-pump"
-
 import { NavbarContent } from "./navbar-content"
-import { query } from "./query"
 
 interface NavbarLink {
   title: string
@@ -9,55 +6,58 @@ interface NavbarLink {
   count?: number
 }
 
+const LINKS: NavbarLink[] = [
+  {
+    title: "Home",
+    href: "/"
+  },
+  {
+    title: "Products",
+    href: "/products"
+  },
+  {
+    title: "Case Studies",
+    href: "/case-studies"
+  },
+  {
+    title: "About",
+    href: "/about"
+  },
+  {
+    title: "Insights",
+    href: "/insights"
+  },
+  {
+    title: "Lab",
+    href: "/lab"
+  }
+]
+
+const SOCIAL_LINKS = {
+  twitter: "https://twitter.com/fulcrumtechai",
+  instagram: "https://instagram.com/fulcrumtechnologies",
+  github: "https://github.com/fulcrumtechnologies",
+  linkedIn: "https://linkedin.com/company/fulcrumtechnologies"
+}
+
+const NEWSLETTER_CONTENT = [
+  {
+    type: "paragraph" as const,
+    children: [
+      {
+        type: "text" as const,
+        value:
+          "Get collision repair intelligence delivered weekly."
+      }
+    ]
+  }
+]
+
 export const Navbar = () => (
-  <Pump queries={[query]}>
-    {async ([data]) => {
-      "use server"
-
-      const projects = data.pages.showcase.projectList.items.length
-      const posts = data.pages.blog.posts.items.length
-      const newsletter = data.company.social.newsletter.json.content
-
-      const LINKS: NavbarLink[] = [
-        {
-          title: "Home",
-          href: "/"
-        },
-        {
-          title: "Services",
-          href: "/services"
-        },
-        {
-          title: "Showcase",
-          href: "/showcase",
-          count: projects
-        },
-        {
-          title: "People",
-          href: "/people"
-        },
-        {
-          title: "Blog",
-          href: "/blog",
-          count: posts
-        },
-        {
-          title: "Lab",
-          href: "/lab"
-        }
-      ]
-
-      return (
-        <NavbarContent
-          key="navbar-content"
-          links={LINKS}
-          socialLinks={{
-            ...data.company.social,
-            linkedIn: data.company.social.linkedIn || ""
-          }}
-          newsletter={newsletter}
-        />
-      )
-    }}
-  </Pump>
+  <NavbarContent
+    key="navbar-content"
+    links={LINKS}
+    socialLinks={SOCIAL_LINKS}
+    newsletter={NEWSLETTER_CONTENT}
+  />
 )

@@ -6,7 +6,7 @@ import { ShowcaseList } from "./showcase-list"
 export const metadata: Metadata = {
   title: "Showcase",
   alternates: {
-    canonical: "https://basement.studio/showcase"
+    canonical: "https://fulcrumtechnologies.ai/case-studies"
   }
 }
 

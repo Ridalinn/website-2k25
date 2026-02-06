@@ -10,12 +10,12 @@ export const Contact = () => (
       </h3>
 
       <p className="relative col-span-8 row-start-2 text-f-h1-mobile text-brand-w2 lg:text-f-h1">
-        Let&apos;s make an impact together.
+        Ready to uncover what your estimates are missing?
       </p>
 
       <div className="relative col-span-5 row-start-3 flex items-center text-[2rem] text-f-h1-mobile text-brand-w1 lg:text-f-h1">
-        <Link href="mailto:hello@basement.studio" target="_blank">
-          <span className="actionable">hello@basement.studio</span>
+        <Link href="mailto:info@fulcrumtechnologies.ai" target="_blank">
+          <span className="actionable">info@fulcrumtechnologies.ai</span>
         </Link>
       </div>
     </div>

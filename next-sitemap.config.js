@@ -1,5 +1,5 @@
 module.exports = {
-  siteUrl: "https://basement.studio",
+  siteUrl: "https://fulcrumtechnologies.ai",
 
   generateIndexSitemap: false,
   generateRobotsTxt: true,

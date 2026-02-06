@@ -48,12 +48,12 @@ export const generateEmailTemplate = (formData: {
             font-size: 24px;
             font-weight: 600;
             letter-spacing: -0.03em;
-            color: #ff4d00;
+            color: #00a6ff;
             margin: 0;
-            text-shadow: 0 2px 4px rgba(255, 77, 0, 0.2);
+            text-shadow: 0 2px 4px rgba(0, 166, 255, 0.2);
           "
         >
-          basement.studio
+          Fulcrum Technologies
         </h1>
       </div>
 
@@ -140,7 +140,7 @@ export const generateEmailTemplate = (formData: {
                 background-color: #0a0a0a;
                 padding: 20px;
 
-                border-left: 3px solid #ff4d00;
+                border-left: 3px solid #00a6ff;
               "
             >
               ${clean(formData.message)}
@@ -154,7 +154,7 @@ export const generateEmailTemplate = (formData: {
           href="mailto:${clean(formData.email)}"
           style="
             display: inline-block;
-            background: linear-gradient(135deg, #ff4d00, #ff6a00);
+            background: linear-gradient(135deg, #00a6ff, #00e5ff);
             color: #000000;
             text-decoration: none;
             padding: 12px 24px;
@@ -162,7 +162,7 @@ export const generateEmailTemplate = (formData: {
             letter-spacing: -0.02em;
             border: none;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(255, 77, 0, 0.3);
+            box-shadow: 0 2px 8px rgba(0, 166, 255, 0.3);
           "
           >Reply to ${clean(formData.name)} (${clean(formData.email)})</a
         >

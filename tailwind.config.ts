@@ -18,17 +18,17 @@ export default {
           g1: "#757575",
           g2: "#2E2E2E",
           k: "#000000",
-          o: "#FF4D00",
-          o2: "#FF2B00",
+          o: "#00a6ff",
+          o2: "#00e5ff",
           r: "#E60002",
           r2: "#FF4D4D",
-          y: "#FFCD1A",
+          y: "#ffb800",
           g: "#00FF9B"
         },
         codeblock: {
-          o: "#FF4D00",
-          lo: "#FF9C71",
-          do: "#EBBA9F",
+          o: "#00a6ff",
+          lo: "#66c8ff",
+          do: "#99d6ff",
           k2: "#0A0A0A"
         }
       },

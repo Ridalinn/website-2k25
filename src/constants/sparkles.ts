@@ -27,7 +27,7 @@ export const SPAWN_POINTS: {
     scale: [1, 0.25, 1.8],
     count: 120
   },
-  // Basement Logo
+  // Fulcrum Logo
   {
     position: [8.4, 2.55, -14.4],
     scale: [1.9, 0.2, 0.2],

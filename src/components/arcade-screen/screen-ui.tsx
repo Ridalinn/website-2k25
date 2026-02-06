@@ -1,14 +1,7 @@
-import { Container } from "@react-three/uikit"
+import { Container, Text } from "@react-three/uikit"
 import { useEffect, useMemo, useRef, useState } from "react"
 
-import { fetchLaboratory } from "@/actions/laboratory-fetch"
 import { useArcadeStore } from "@/store/arcade-store"
-
-import { ArcadeFeatured } from "./arcade-ui-components/arcade-featured"
-import { ArcadeLabsList } from "./arcade-ui-components/arcade-labs-list"
-import { ArcadePreview } from "./arcade-ui-components/arcade-preview"
-import { ArcadeTitleTagsHeader } from "./arcade-ui-components/arcade-title-tags-header"
-import { ArcadeWrapperTags } from "./arcade-ui-components/arcade-wrapper-tags"
 
 interface ScreenUIProps {
   onLoad?: () => void
@@ -16,8 +9,13 @@ interface ScreenUIProps {
 }
 
 export const COLORS_THEME = {
-  primary: "#FF4D00",
-  black: "#000"
+  primary: "#00a6ff",
+  secondary: "#ffb800",
+  black: "#000",
+  green: "#00ff9b",
+  red: "#ff4d4d",
+  white: "#e6e6e6",
+  gray: "#757575"
 }
 
 export interface LabTab {
@@ -30,61 +28,38 @@ export interface LabTab {
 
 export const createLabTabs = (experiments: any[]): LabTab[] => {
   const tabs: LabTab[] = [
-    // Close button
     {
       id: "close",
       type: "button",
       title: "CLOSE [ESC]",
       isClickable: true
     },
-
-    // Experiments
-    ...experiments.map((exp) => ({
+    ...experiments.map((exp: any) => ({
       id: `experiment-${exp._title}`,
       type: "experiment" as const,
       title: exp._title.toUpperCase(),
-      url: `https://lab.basement.studio/experiments/${exp.url}`,
+      url: exp.url,
       isClickable: true
     })),
-
-    // View More button
     {
-      id: "view-more",
+      id: "aegis-demo",
       type: "button",
-      title: "VIEW MORE",
-      url: "https://lab.basement.studio/",
+      title: "AEGIS DEMO",
       isClickable: true
-    },
-
-    // Chronicles
-    {
-      id: "chronicles",
-      type: "featured",
-      title: "CHRONICLES",
-      url: "https://chronicles.basement.studio",
-      isClickable: true
-    },
-
-    // Looper
-    {
-      id: "looper",
-      type: "featured",
-      title: "LOOPER (COMING SOON)",
-      isClickable: false
     }
   ]
-
   return tabs
 }
 
 export const ScreenUI = ({ onLoad, visible }: ScreenUIProps) => {
   const onLoadRef = useRef(onLoad)
   onLoadRef.current = onLoad
+  const aegisStatus = useArcadeStore((s) => s.aegisStatus)
+  const aegisProgress = useArcadeStore((s) => s.aegisProgress)
+  const aegisStatusMessage = useArcadeStore((s) => s.aegisStatusMessage)
+  const aegisScanResult = useArcadeStore((s) => s.aegisScanResult)
+  const [pulseOpacity, setPulseOpacity] = useState(1)
 
-  const [experiments, setExperiments] = useState<any[]>([])
-  const [selectedExperiment, setSelectedExperiment] = useState<any>(null)
-
-  // Font URL for react-three/uikit
   const fontFamilies = useMemo(
     () => ({
       ffflauta: {
@@ -96,22 +71,24 @@ export const ScreenUI = ({ onLoad, visible }: ScreenUIProps) => {
 
   useEffect(() => {
     if (visible) {
-      fetchLaboratory().then((data) => {
-        const experiments = data.projectList.items.map((item: any) => ({
-          _title: item._title,
-          url: item.url,
-          cover: item.cover,
-          description: item.description as string | null
-        }))
-        setExperiments(experiments)
-
-        const labTabs = createLabTabs(experiments)
-        useArcadeStore.getState().setLabTabs(labTabs)
-
-        onLoadRef.current?.()
-      })
+      useArcadeStore.getState().setLabTabs([])
+      onLoadRef.current?.()
     }
   }, [visible])
+
+  // Pulse animation for idle state
+  useEffect(() => {
+    if (aegisStatus !== "idle") return
+    let frame: number
+    let t = 0
+    const tick = () => {
+      t += 0.03
+      setPulseOpacity(0.5 + Math.sin(t) * 0.5)
+      frame = requestAnimationFrame(tick)
+    }
+    frame = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frame)
+  }, [aegisStatus])
 
   return (
     <group visible={visible} scale={[-1, 1, 1]}>
@@ -141,26 +118,256 @@ export const ScreenUI = ({ onLoad, visible }: ScreenUIProps) => {
           borderColor={COLORS_THEME.primary}
           borderRadius={10}
           paddingY={10}
+          paddingX={14}
           flexDirection="column"
+          gap={8}
         >
-          <ArcadeWrapperTags />
-          <ArcadeTitleTagsHeader />
+          {/* Header */}
           <Container
             width={"100%"}
-            flexGrow={1}
-            zIndexOffset={16}
-            padding={10}
             flexDirection="row"
-            gap={10}
+            justifyContent="space-between"
+            alignItems="center"
           >
-            <ArcadeLabsList
-              experiments={experiments}
-              selectedExperiment={selectedExperiment}
-              setSelectedExperiment={setSelectedExperiment}
-            />
-            <ArcadePreview selectedExperiment={selectedExperiment} />
+            <Container flexDirection="column">
+              <Text fontSize={22} color={COLORS_THEME.primary}>
+                AEGIS
+              </Text>
+              <Text fontSize={8} color={COLORS_THEME.gray}>
+                FORENSIC AUDIT TERMINAL v2.1
+              </Text>
+            </Container>
+            <Container flexDirection="column" alignItems="flex-end">
+              <Text fontSize={8} color={COLORS_THEME.gray}>
+                FULCRUM TECHNOLOGIES
+              </Text>
+              <Text fontSize={8} color={COLORS_THEME.primary}>
+                {aegisStatus === "idle"
+                  ? "READY"
+                  : aegisStatus === "complete"
+                    ? "COMPLETE"
+                    : "PROCESSING"}
+              </Text>
+            </Container>
           </Container>
-          <ArcadeFeatured />
+
+          {/* Divider */}
+          <Container
+            width={"100%"}
+            height={1}
+            backgroundColor={COLORS_THEME.primary}
+            {...({ opacity: 0.3 } as any)}
+          />
+
+          {/* Main Content - Idle */}
+          {aegisStatus === "idle" && (
+            <Container
+              width={"100%"}
+              flexGrow={1}
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              gap={12}
+            >
+              <Text
+                fontSize={16}
+                color={COLORS_THEME.primary}
+                {...({ opacity: pulseOpacity } as any)}
+              >
+                DROP ESTIMATE HERE
+              </Text>
+              <Container
+                width={200}
+                height={100}
+                borderWidth={2}
+                borderColor={COLORS_THEME.primary}
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                gap={6}
+              >
+                <Text fontSize={24} color={COLORS_THEME.primary}>
+                  PDF
+                </Text>
+                <Text fontSize={8} color={COLORS_THEME.gray}>
+                  DRAG & DROP OR CLICK TO UPLOAD
+                </Text>
+              </Container>
+              <Text fontSize={9} color={COLORS_THEME.gray}>
+                SUPPORTS CCC ONE, MITCHELL, AUDATEX FORMATS
+              </Text>
+            </Container>
+          )}
+
+          {/* Main Content - Scanning */}
+          {(aegisStatus === "scanning" || aegisStatus === "analyzing") && (
+            <Container
+              width={"100%"}
+              flexGrow={1}
+              flexDirection="column"
+              gap={10}
+              paddingTop={8}
+            >
+              <Text fontSize={14} color={COLORS_THEME.secondary}>
+                SCANNING...
+              </Text>
+
+              {/* Progress bar */}
+              <Container width={"100%"} height={6} backgroundColor="#1a1a1a">
+                <Container
+                  width={`${aegisProgress}%` as any}
+                  height={6}
+                  backgroundColor={COLORS_THEME.primary}
+                />
+              </Container>
+
+              <Text fontSize={10} color={COLORS_THEME.primary}>
+                {aegisStatusMessage}
+              </Text>
+
+              {/* Scan output lines */}
+              <Container
+                width={"100%"}
+                flexDirection="column"
+                gap={3}
+                paddingTop={6}
+              >
+                {aegisProgress > 15 && (
+                  <Text fontSize={8} color={COLORS_THEME.green}>
+                    [OK] Estimate format detected: CCC ONE
+                  </Text>
+                )}
+                {aegisProgress > 30 && (
+                  <Text fontSize={8} color={COLORS_THEME.green}>
+                    [OK] Vehicle identified: 2023 Toyota RAV4
+                  </Text>
+                )}
+                {aegisProgress > 45 && (
+                  <Text fontSize={8} color={COLORS_THEME.secondary}>
+                    [!!] 3 ADAS calibrations required — not on estimate
+                  </Text>
+                )}
+                {aegisProgress > 60 && (
+                  <Text fontSize={8} color={COLORS_THEME.secondary}>
+                    [!!] 7 one-time-use parts missing
+                  </Text>
+                )}
+                {aegisProgress > 75 && (
+                  <Text fontSize={8} color={COLORS_THEME.secondary}>
+                    [!!] 5 R&I operations not included
+                  </Text>
+                )}
+                {aegisProgress > 90 && (
+                  <Text fontSize={8} color={COLORS_THEME.green}>
+                    [OK] Cross-referencing labor time databases...
+                  </Text>
+                )}
+              </Container>
+            </Container>
+          )}
+
+          {/* Main Content - Complete */}
+          {aegisStatus === "complete" && aegisScanResult && (
+            <Container
+              width={"100%"}
+              flexGrow={1}
+              flexDirection="column"
+              gap={6}
+              paddingTop={4}
+            >
+              <Container
+                width={"100%"}
+                flexDirection="row"
+                justifyContent="space-between"
+              >
+                <Text fontSize={9} color={COLORS_THEME.gray}>
+                  SCAN: {aegisScanResult.scan_id}
+                </Text>
+                <Text fontSize={9} color={COLORS_THEME.gray}>
+                  {aegisScanResult.estimating_system}
+                </Text>
+              </Container>
+
+              <Text fontSize={10} color={COLORS_THEME.white}>
+                {aegisScanResult.vehicle}
+              </Text>
+
+              {/* Results summary box */}
+              <Container
+                width={"100%"}
+                backgroundColor="#0a1a2a"
+                padding={8}
+                flexDirection="column"
+                gap={4}
+                borderWidth={1}
+                borderColor={COLORS_THEME.primary}
+              >
+                <Text fontSize={11} color={COLORS_THEME.secondary}>
+                  {aegisScanResult.findings.missing_operations} MISSING
+                  OPERATIONS FOUND
+                </Text>
+                <Text fontSize={18} color={COLORS_THEME.green}>
+                  SUPPLEMENT VALUE:{" "}
+                  {aegisScanResult.findings.total_supplement_value}
+                </Text>
+              </Container>
+
+              {/* Category breakdown */}
+              <Container width={"100%"} flexDirection="column" gap={3}>
+                {aegisScanResult.categories.map((cat, i) => (
+                  <Container
+                    key={i}
+                    width={"100%"}
+                    flexDirection="row"
+                    justifyContent="space-between"
+                  >
+                    <Text fontSize={9} color={COLORS_THEME.white}>
+                      {cat.name} ({cat.count})
+                    </Text>
+                    <Text fontSize={9} color={COLORS_THEME.green}>
+                      {cat.value}
+                    </Text>
+                  </Container>
+                ))}
+              </Container>
+
+              {/* Actions */}
+              <Container
+                width={"100%"}
+                flexDirection="row"
+                justifyContent="center"
+                gap={20}
+                paddingTop={4}
+              >
+                <Text fontSize={10} color={COLORS_THEME.primary}>
+                  [DOWNLOAD REPORT]
+                </Text>
+                <Text fontSize={10} color={COLORS_THEME.primary}>
+                  [NEW SCAN]
+                </Text>
+              </Container>
+            </Container>
+          )}
+
+          {/* Bottom status bar */}
+          <Container
+            width={"100%"}
+            height={1}
+            backgroundColor={COLORS_THEME.primary}
+            {...({ opacity: 0.3 } as any)}
+          />
+          <Container
+            width={"100%"}
+            flexDirection="row"
+            justifyContent="space-between"
+          >
+            <Text fontSize={7} color={COLORS_THEME.gray}>
+              AEGIS ENGINE v2.1.0 | 12 AI AGENTS ACTIVE
+            </Text>
+            <Text fontSize={7} color={COLORS_THEME.gray}>
+              FULCRUMTECHNOLOGIES.AI
+            </Text>
+          </Container>
         </Container>
       </Container>
     </group>

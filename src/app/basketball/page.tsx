@@ -3,9 +3,9 @@ import type { Metadata } from "next"
 import Basketball from "./client"
 
 export const metadata: Metadata = {
-  title: "basement Shot",
+  title: "Fulcrum Shot",
   alternates: {
-    canonical: "https://basement.studio/basketball"
+    canonical: "https://fulcrumtechnologies.ai/basketball"
   }
 }
 

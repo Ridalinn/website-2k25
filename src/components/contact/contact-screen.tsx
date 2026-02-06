@@ -256,29 +256,29 @@ export const ContactScreen = () => {
             </form>
             <div className="flex w-full items-center justify-between text-[12px] uppercase">
               <div className="flex items-center gap-[2px]">
-                <Link href="https://x.com/basementstudio" target="_blank">
-                  <span className="actionable [text-shadow:0_0_10px_rgba(255,140,0,0.15)]">
+                <Link href="https://x.com/fulcrumtechai" target="_blank">
+                  <span className="actionable [text-shadow:0_0_10px_rgba(0,166,255,0.15)]">
                     X (Twitter)
                   </span>
                 </Link>
                 <span className="opacity-50">, </span>
                 <Link
-                  href="https://www.instagram.com/basementdotstudio"
+                  href="https://www.instagram.com/fulcrumtechnologies"
                   target="_blank"
                 >
-                  <span className="actionable [text-shadow:0_0_10px_rgba(255,140,0,0.15)]">
+                  <span className="actionable [text-shadow:0_0_10px_rgba(0,166,255,0.15)]">
                     Instagram
                   </span>
                 </Link>
                 <span className="opacity-50">, </span>
-                <Link href="https://github.com/basementstudio" target="_blank">
-                  <span className="actionable [text-shadow:0_0_10px_rgba(255,140,0,0.15)]">
+                <Link href="https://github.com/fulcrumtechnologies" target="_blank">
+                  <span className="actionable [text-shadow:0_0_10px_rgba(0,166,255,0.15)]">
                     GitHub
                   </span>
                 </Link>
               </div>
-              <Link href="mailto:hello@basement.studio" target="_blank">
-                <span className="actionable">(hello@basement.studio)</span>
+              <Link href="mailto:info@fulcrumtechnologies.ai" target="_blank">
+                <span className="actionable">(info@fulcrumtechnologies.ai)</span>
               </Link>
             </div>
           </div>

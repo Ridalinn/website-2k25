@@ -47,7 +47,7 @@ export const generateMetadata = async ({ params }: ProjectPostProps) => {
       absolute: `${post._title ?? "Untitled"} | Blog`
     },
     alternates: {
-      canonical: `https://basement.studio/post/${slug}`
+      canonical: `https://fulcrumtechnologies.ai/post/${slug}`
     }
   }
 }

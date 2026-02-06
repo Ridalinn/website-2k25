@@ -328,7 +328,7 @@ export const CrewFooter = ({ spanStart, spanEnd }: CrewFooterProps) => (
     }}
   >
     <Link
-      href="mailto:careers@basement.studio"
+      href="mailto:careers@fulcrumtechnologies.ai"
       target="_blank"
       className="relative z-10 flex h-4 items-center gap-1 bg-brand-k text-f-p-mobile text-brand-w1 lg:text-f-p"
     >

@@ -6,7 +6,7 @@ const socialLinks = [
   {
     Icon: LinkedInIcon,
     href: (slug: string, _: string) => {
-      const url = `https://basement.studio/post/${slug}`
+      const url = `https://fulcrumtechnologies.ai/post/${slug}`
       return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`
     },
     label: "Share on LinkedIn"
@@ -14,8 +14,8 @@ const socialLinks = [
   {
     Icon: XIcon,
     href: (slug: string, title: string) => {
-      const url = `https://basement.studio/post/${slug.toLowerCase().replace(/ /g, "-")}`
-      const text = `Check out "${title}" from @basementstudio `
+      const url = `https://fulcrumtechnologies.ai/post/${slug.toLowerCase().replace(/ /g, "-")}`
+      const text = `Check out "${title}" from @fulcrumtechai `
       return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
     },
     label: "Share on X"
@@ -80,7 +80,7 @@ export const BlogMeta = ({ data, categories }: BlogMetaComponentProps) => (
           {typeof data.date === "string" ? formatDate(data.date) : null}
           <span className="inline-block size-1 bg-brand-g1" />{" "}
           {data.authors?.map((author) => author._title).join(", ") ||
-            "basement.studio"}
+            "fulcrumtechnologies.ai"}
         </p>
         <div className="flex gap-2">
           {socialLinks.map((social, index) => (

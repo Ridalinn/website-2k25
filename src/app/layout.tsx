@@ -21,30 +21,24 @@ import { cn } from "@/utils/cn"
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | basement.studio",
-    default: "basement.studio | We make cool shit that performs."
+    template: "%s | Fulcrum Technologies",
+    default:
+      "Fulcrum Technologies | Precision AI for Collision Repair"
   },
   description:
-    "A digital studio & branding powerhouse making cool shit that performs.",
+    "AI-powered forensic intelligence for the collision repair industry. We build the systems that find what insurance estimates miss.",
   twitter: {
-    creator: "@basementstudio",
-    site: "@basementstudio",
+    creator: "@fulcrumtechai",
+    site: "@fulcrumtechai",
     card: "summary_large_image",
-    title: "basement.studio | We make cool shit that performs.",
-    images: {
-      url: "https://assets.basehub.com/dd0abb74/8e8a566714b78747cf8000eb4befc62e/twitter-image.png",
-      width: 1200,
-      height: 642
-    },
+    title: "Fulcrum Technologies | Precision AI for Collision Repair",
     description:
-      "A digital studio & branding powerhouse making cool shit that performs."
+      "AI-powered forensic intelligence for the collision repair industry. We build the systems that find what insurance estimates miss."
   },
   openGraph: {
-    images: {
-      url: "https://assets.basehub.com/dd0abb74/a9e91ceaa32446785f03a8ee00a73d71/opengraph-image.gif",
-      width: 1200,
-      height: 642
-    }
+    title: "Fulcrum Technologies | Precision AI for Collision Repair",
+    description:
+      "AI-powered forensic intelligence for the collision repair industry."
   }
 }
 
